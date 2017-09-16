@@ -22,7 +22,7 @@ var currentState = STATES.IDLE;
 function startReading() {
 
   chrome.tabs.executeScript( {
-    code: "window.getSelection().extentNode.data;"
+    code: "window.getSelection().toString();"
   }, function(selection) {
     
     var text = selection[0];
@@ -48,6 +48,7 @@ function createReader(text) {
   
   reader.voice = voices[voiceIndex];
   reader.onend = (ev) => stopReading();
+  reader.onerror = (ev) => console.error(ev);
 
   return reader;
 }
